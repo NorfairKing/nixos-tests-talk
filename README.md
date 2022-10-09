@@ -3,5 +3,5 @@
 Give the presentation:
 
 ```
-nix develop --command patat presentation.md
+nix run . -- presentation.md
 ```
