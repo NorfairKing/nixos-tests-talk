@@ -14,7 +14,7 @@
         patat = (import nixpkgs-old { system = "x86_64-linux"; config.allowBroken = true; }).haskellPackages.patat;
     in
     {
-      packages.x86_64-linux = {
+      checks.x86_64-linux = {
         example = import ./example-nixos-test.nix { inherit pkgs; };
         template = import ./template-nixos-test.nix { inherit pkgs; };
       };
