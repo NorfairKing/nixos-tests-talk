@@ -4,5 +4,5 @@
 Give the presentation:
 
 ```
-nix run . -- presentation.md
+nix run
 ```

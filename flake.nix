@@ -20,7 +20,9 @@
       };
       apps.x86_64-linux.default = {
         type = "app";
-        program = "${patat}/bin/patat";
+        program = "${pkgs.writeShellScript "presentation" ''
+          ${patat}/bin/patat ${./presentation.md}
+        ''}";
       };
       devShells.x86_64-linux.default = pkgs.mkShell {
         name = "nixos-tests-talk-shell";
