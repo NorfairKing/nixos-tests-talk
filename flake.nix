@@ -7,16 +7,29 @@
     # https://github.com/jaspervdj/patat/issues/123
     nixpkgs-old.url = "github:NixOS/nixpkgs?ref=96ceff97da009d9605287e70cd20b04409ea30c6";
     nixpkgs-old.flake = false;
+    pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-old }:
-    let pkgs = import nixpkgs { system = "x86_64-linux"; };
-        patat = (import nixpkgs-old { system = "x86_64-linux"; config.allowBroken = true; }).haskellPackages.patat;
+  outputs =
+    { self
+    , nixpkgs
+    , nixpkgs-old
+    , pre-commit-hooks
+    }:
+    let
+      pkgs = import nixpkgs { system = "x86_64-linux"; };
+      patat = (import nixpkgs-old { system = "x86_64-linux"; config.allowBroken = true; }).haskellPackages.patat;
     in
     {
       checks.x86_64-linux = {
         example = import ./example-nixos-test.nix { inherit pkgs; };
         template = import ./template-nixos-test.nix { inherit pkgs; };
+        pre-commit = pre-commit-hooks.lib.x86_64-linux.run {
+          src = ./.;
+          hooks = {
+            nixpkgs-fmt.enable = true;
+          };
+        };
       };
       apps.x86_64-linux.default = {
         type = "app";
@@ -28,7 +41,9 @@
         name = "nixos-tests-talk-shell";
         buildInputs = with pkgs; [
           patat
+          nixpkgs-fmt
         ];
+        shellHook = self.checks.x86_64-linux.pre-commit.shellHook;
       };
     };
 }

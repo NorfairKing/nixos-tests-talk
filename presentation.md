@@ -43,27 +43,35 @@ cp template-nixos-test.nix my-nixos-test.nix
 git add my-nixos-test.nix
 feedback -- nix-build my-nixos-test.nix
 
+Write the nginx test together, keep this open:
+nixos.org/manual/nixos/stable/index.html#sec-nixos-tests
+
 -->
 
-# Driver
+# Test Driver Repl
 
-TODO: Double-check
+Run test steps in a repl
 
 <!--
 
-nix-build my-nixos-test.nix -A driver
+nix-build my-nixos-test.nix -A driver # Just commands
+./result/bin/nixos-test-driver --interactive
 
 -->
 
-# Interactive
-
-TODO: Double-check
+# Interactive Test Driver
 
 <!--
-
-nix-build my-nixos-test.nix -A driverInteractive
+nix-build my-nixos-test.nix -A driverInteractive # With VM screen
+./result/bin/nixos-test-driver
 
 -->
+
+# Limitations
+
+* It's a nix-build, so no internet.
+* Debugging can be a rabbit hole.
+* Running them on CI requires the `kvm` `nixos-test` and features
 
 # Cool things you can do now
 
@@ -99,4 +107,5 @@ nix-build my-nixos-test.nix
 
 # References
 
-nixos.org/manual/nixos/stable/index.html#sec-nixos-tests
+* nixos.org/manual/nixos/stable/index.html#sec-nixos-tests
+* https://github.com/NixOS/nix.dev/pull/305/files
