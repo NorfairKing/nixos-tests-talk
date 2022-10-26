@@ -108,4 +108,5 @@ nix-build my-nixos-test.nix
 # References
 
 * nixos.org/manual/nixos/stable/index.html#sec-nixos-tests
+* https://nix.dev/tutorials/integration-testing-using-virtual-machines
 * https://github.com/NixOS/nix.dev/pull/305/files
